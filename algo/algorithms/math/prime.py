@@ -80,5 +80,7 @@ def miller_rabin_check(n: int) -> bool:
                 return True
         return False
 
-    possible_a = [2, 7, 61]  # sprp, correctly check prime under n < 4,759,123,141
-    return all([witness(a % n) for a in possible_a])
+    # sprp, correctly check prime under n < 341,550,071,728,321 ~= 2^48
+    sprp = [2, 3, 5, 7, 11, 13, 17]
+    # for n < 4,759,123,141 ~= 2^32, [2, 7, 61]
+    return all([witness(a % n) for a in sprp])
