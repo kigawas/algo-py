@@ -32,6 +32,4 @@ def solve_by_dp(K: int, N: int):
         general_lower_bound(closure, 1, N + 1)
         return res
 
-    res = dp(K, N)
-    print(dp.cache_info())
-    return res
+    return dp(K, N)
