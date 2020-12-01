@@ -2,16 +2,16 @@ from random import randint
 from typing import List
 
 
-def linear(N: int) -> List[int]:
-    sieve = [False] * N
-    primes = []
+def linear(n: int) -> List[int]:
+    sieve = [False] * n
+    primes = []  # has to be monotonic in order
 
-    for i in range(2, N):
+    for i in range(2, n):
         if not sieve[i]:
             primes.append(i)
 
         for p in primes:
-            if i * p >= N:
+            if i * p >= n:
                 break
             sieve[i * p] = True
             if i % p == 0:
