@@ -17,6 +17,7 @@ def quick_sort(array: List[int]) -> List[int]:
 
 def merge(A: List[int], B: List[int]) -> List[int]:
     i, j = 0, 0
+
     res = []
     while i < len(A) and j < len(B):
         if A[i] <= B[j]:
