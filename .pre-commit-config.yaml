@@ -6,7 +6,7 @@ repos:
         exclude: venv
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.3.0
+    rev: v3.4.0
     hooks:
       - id: trailing-whitespace
       - id: check-yaml
@@ -21,4 +21,4 @@ repos:
     hooks:
       - id: flake8
         # allow "imported but unused" for pre-commit, forbid it elsewhere e.g. in vscode
-        args: ["--config=setup.cfg", "--ignore=E501,E402,F401"]
+        args: ["--config=setup.cfg", "--ignore=E501,E402,F401,E203"]
