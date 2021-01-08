@@ -20,10 +20,10 @@ def split(root: Optional[Node], value: int) -> Tuple[Optional[Node], Optional[No
     r"""
     Given:
     ```
-         R                             A                B
-       /   \                         /   \            /   \
-      /     \                       /     \          /     \
-     A       B                    LA       RA      LB       RB
+         R                A                B
+       /   \            /   \            /   \
+      /     \          /     \          /     \
+     A       B       LA       RA      LB       RB
     ```
     If R.value < value, set R.left = RA, return (LA, R):
     ```
@@ -32,9 +32,9 @@ def split(root: Optional[Node], value: int) -> Tuple[Optional[Node], Optional[No
       /     \                       /      \          /     \
      A       B                    ??        ??      RA       B
     ```
-    Else, set R.right = LB, return (R, LB):
+    Else, set R.right = LB, return (R, RB):
     ```
-         R                             R                LB
+         R                             R                RB
        /   \            ->           /   \            /    \
       /     \                       /     \          /      \
      A       B                     A       LB      ??        ??
