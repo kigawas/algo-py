@@ -4,15 +4,14 @@ from dataclasses import dataclass
 from typing import Optional
 from typing import Tuple
 
-from .bst import AbstractNode
 from .bst import find
+from .bst import Node as _Node
 
 
 @dataclass
-class Node(AbstractNode):
+class Node(_Node):
     left: Optional[Node] = None
     right: Optional[Node] = None
-    value: int = 0
     priority: int = 0
 
 
@@ -25,14 +24,14 @@ def split(root: Optional[Node], value: int) -> Tuple[Optional[Node], Optional[No
       /     \          /     \          /     \
      A       B       LA       RA      LB       RB
     ```
-    If R.value < value, set R.left = RA, return (LA, R):
+    If value < R.value, to keep the B subtree, set R.left = RA, return (LA, R):
     ```
          R                             LA                R
        /   \            ->           /    \            /   \
       /     \                       /      \          /     \
      A       B                    ??        ??      RA       B
     ```
-    Else, set R.right = LB, return (R, RB):
+    Else, to keep the A subtree, set R.right = LB, return (R, RB):
     ```
          R                             R                RB
        /   \            ->           /   \            /    \

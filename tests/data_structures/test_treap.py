@@ -12,7 +12,7 @@ from algo.data_structures.treap import Node
 from algo.data_structures.treap import split
 
 
-def test_node():
+def test_split_merge():
     n1 = Node(value=3)
     n2 = Node(value=2)
     n3 = Node(value=1)
@@ -21,8 +21,7 @@ def test_node():
     n2.left = n3
 
     left, right = split(n1, 2)
-    assert right is n1
-    assert left is n2
+    assert left is n2 and right is n1
     assert left.left is n3
 
     new_root = merge(left, right)
