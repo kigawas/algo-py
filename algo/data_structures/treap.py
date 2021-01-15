@@ -19,19 +19,22 @@ def split(root: Optional[Node], value: int) -> Tuple[Optional[Node], Optional[No
     r"""
     Given:
     ```
-         R                A                B
-       /   \            /   \            /   \
-      /     \          /     \          /     \
-     A       B       LA       RA      LB       RB
+                      R
+                    /   \
+                  /       \
+                A           B
+              /   \       /   \
+             /     \     /     \
+           LA       RA LB       RB
     ```
-    If value < R.value, to keep the B subtree, set R.left = RA, return (LA, R):
+    If value < R.value, to cut A and R, set `R.left = RA`, return `(LA, R)`:
     ```
          R                             LA                R
        /   \            ->           /    \            /   \
       /     \                       /      \          /     \
      A       B                    ??        ??      RA       B
     ```
-    Else, to keep the A subtree, set R.right = LB, return (R, RB):
+    Else, to cut R and B, set `R.right = LB`, return `(R, RB)`:
     ```
          R                             R                RB
        /   \            ->           /   \            /    \
@@ -61,7 +64,7 @@ def merge(root_l: Optional[Node], root_r: Optional[Node]) -> Optional[Node]:
        /     \          /     \
      LA       RA      LB       RB
     ```
-    If A.priority > B.priority, set A.right = merge(RA, B), return A;
+    If A.priority > B.priority, set `A.right = merge(RA, B)`, return A;
     ```
           A
         /   \
@@ -72,7 +75,7 @@ def merge(root_l: Optional[Node], root_r: Optional[Node]) -> Optional[Node]:
                                        LB       RB
 
     ```
-    Else, set B.left = merge(A, LB), return B.
+    Else, set `B.left = merge(A, LB)`, return B.
     ```
                                      B
                                    /   \

@@ -113,6 +113,8 @@ def is_bst(root: Optional[AbstractNode]) -> bool:
     elif root.right is None and root.left is not None:
         return root.left.value < root.value and is_bst(root.left)
 
+    assert root.left is not None and root.right is not None
+
     is_valid = root.left.value < root.value < root.right.value
     return is_valid and is_bst(root.left) and is_bst(root.right)
 
