@@ -19,13 +19,13 @@ def split(root: Optional[Node], value: int) -> Tuple[Optional[Node], Optional[No
     r"""
     Given:
     ```
-                      R
-                    /   \
-                  /       \
-                A           B
-              /   \       /   \
-             /     \     /     \
-           LA       RA LB       RB
+                     R
+                ___/   \___
+               /           \
+           split(A)        split(B)
+            /   \         /   \
+           /     \       /     \
+         LA       RA   LB       RB
     ```
     If value < R.value, to cut A and R, set `R.left = RA`, return `(LA, R)`:
     ```
@@ -64,7 +64,7 @@ def merge(root_l: Optional[Node], root_r: Optional[Node]) -> Optional[Node]:
        /     \          /     \
      LA       RA      LB       RB
     ```
-    If A.priority > B.priority, set `A.right = merge(RA, B)`, return A;
+    If A.priority < B.priority, set `A.right = merge(RA, B)`, return A;
     ```
           A
         /   \
@@ -95,7 +95,7 @@ def merge(root_l: Optional[Node], root_r: Optional[Node]) -> Optional[Node]:
     if root_l.value > root_r.value:
         raise ValueError
 
-    if root_l.priority > root_r.priority:  # < is also okay
+    if root_l.priority < root_r.priority:  # in practice, > is also okay
         root_l.right = merge(root_l.right, root_r)
         return root_l
     else:
@@ -105,6 +105,8 @@ def merge(root_l: Optional[Node], root_r: Optional[Node]) -> Optional[Node]:
 
 def insert(root: Optional[Node], value: int, priority: int = 0) -> Optional[Node]:
     r"""
+    Intuition: A randomized treap is a quick sort recursion tree per se.
+
     Split root to `A` and `B`, which means `value`s in `A` <= `value` and `values` in `B` > `value`
     ```
           A                B
