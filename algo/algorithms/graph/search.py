@@ -1,17 +1,13 @@
 from collections import deque
-from heapq import heappop
-from heapq import heappush
-from typing import Callable
-from typing import Deque
-from typing import Dict
-from typing import List
-from typing import Optional
-from typing import Tuple
+from heapq import heappop, heappush
+from typing import Any, Callable, Deque, List, Optional, Tuple
 
-Vertex = Tuple[Optional[int], int]
+from algo.data_structures.graph import Graph
+
+Vertex = Tuple[Optional[Any], Any]
 
 
-def dfs(graph: Dict[int, List[int]], s: int, visit: Callable = lambda n: print(n)):
+def dfs(graph: Graph, s: int, visit: Callable = lambda n: print(n)):
     visited = set()
     bag: List[Vertex] = [(None, s)]
     parent = {}
@@ -21,13 +17,13 @@ def dfs(graph: Dict[int, List[int]], s: int, visit: Callable = lambda n: print(n
             visit(v)
             visited.add(v)
             parent[v] = p
-            for w in graph.get(v, []):
+            for w in graph[v]:
                 bag.append((v, w))
 
     return parent
 
 
-def bfs(graph: Dict[int, List[int]], s: int, visit: Callable = lambda n: print(n)):
+def bfs(graph: Graph, s: int, visit: Callable = lambda n: print(n)):
     visited = set()
     bag: Deque[Vertex] = deque([(None, s)])
     parent = {}
@@ -37,13 +33,13 @@ def bfs(graph: Dict[int, List[int]], s: int, visit: Callable = lambda n: print(n
             visit(v)
             visited.add(v)
             parent[v] = p
-            for w in graph.get(v, []):
+            for w in graph[v]:
                 bag.append((v, w))
     return parent
 
 
 def shortest_paths(
-    graph: Dict[int, List[Tuple[int, int]]],
+    graph: Graph,
     s: int,
     visit: Callable = lambda n, d: print(n, d),
 ):
@@ -55,7 +51,7 @@ def shortest_paths(
         if v not in visited:
             visit(v, v_dist)
             visited.add(v)
-            for (w, weight) in graph.get(v, []):
+            for (w, weight) in graph[v].items():
                 if w not in dist or dist[w] > dist[v] + weight:
                     dist[w] = dist[v] + weight
                 heappush(bag, (dist[w], w))

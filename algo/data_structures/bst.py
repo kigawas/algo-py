@@ -2,8 +2,7 @@ from __future__ import annotations
 
 from abc import ABC
 from dataclasses import dataclass
-from typing import Callable
-from typing import Optional
+from typing import Callable, Optional
 
 
 class AbstractNode(ABC):

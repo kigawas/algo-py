@@ -1,11 +1,12 @@
-from algo.algorithms.graph.search import bfs
-from algo.algorithms.graph.search import dfs
-from algo.algorithms.graph.search import shortest_paths
+from algo.algorithms.graph.search import bfs, dfs, shortest_paths
+from algo.data_structures.graph import Graph
 
-graph = {
-    1: [2, 3],
-    2: [3, 4],
-}
+graph = Graph.from_dict(
+    {
+        1: {2: 1, 3: 1},
+        2: {3: 1, 4: 1},
+    }
+)
 
 
 def test_dfs():
@@ -21,11 +22,13 @@ def test_bfs():
 
 
 def test_best_search():
-    graph = {
-        1: [(2, 3), (3, 5)],
-        2: [(3, 1), (4, 3)],
-        3: [(4, 1)],
-    }
+    graph = Graph.from_dict(
+        {
+            1: {2: 3, 3: 5},
+            2: {3: 1, 4: 3},
+            3: {4: 1},
+        }
+    )
     dist = {}
     shortest_paths(
         graph,

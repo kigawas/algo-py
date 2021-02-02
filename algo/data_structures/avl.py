@@ -1,9 +1,6 @@
 from typing import Optional
 
-from .bst import AbstractNode
-from .bst import height
-from .bst import rotate_to_left
-from .bst import rotate_to_right
+from .bst import AbstractNode, height, rotate_to_left, rotate_to_right
 
 
 def rebalance(root: Optional[AbstractNode]) -> Optional[AbstractNode]:

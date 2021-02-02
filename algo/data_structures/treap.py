@@ -1,11 +1,10 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Optional
-from typing import Tuple
+from typing import Optional, Tuple
 
-from .bst import find
 from .bst import Node as _Node
+from .bst import find
 
 
 @dataclass
