@@ -1,9 +1,19 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import Any, Dict, Iterator, TypeVar
+from typing import Any
+from typing import Callable
+from typing import Dict
+from typing import Iterator
+from typing import Optional
+from typing import Tuple
+from typing import TypeVar
+
+from .bag import Bag
+from .bag import PriorityQueue
 
 T = TypeVar("T", str, int)
+ScoreT = TypeVar("ScoreT", int, float)
 G = Dict[Any, Dict[Any, int]]
 
 
@@ -42,3 +52,52 @@ class Graph(Mapping[T, Dict[T, int]]):
             if v not in self._g:
                 self._g[v] = {}
             self._g[v][u] = weight
+
+    def wfs(
+        self,
+        s: T,
+        bag: Bag,
+        visit: Callable[[T], None] = lambda _: None,
+    ) -> Dict[T, Optional[T]]:
+        # whatever first search
+        assert bag.is_empty()
+
+        bag.push((None, s))
+        visited = set()
+        parent = {}
+        while not bag.is_empty():
+            prev, v = bag.pop()
+
+            if v not in visited:
+                visit(v)
+                visited.add(v)
+                parent[v] = prev
+                for w in self[v]:
+                    bag.push((v, w))
+
+        return parent
+
+    def pqs(
+        self,
+        s: T,
+        pq: PriorityQueue[Tuple[ScoreT, Tuple[Optional[T], T]]],
+        init_score: ScoreT,
+        score: Callable[[T, T, ScoreT], ScoreT],
+        visit: Callable[[T, ScoreT], None] = lambda x, y: None,
+    ) -> Dict[T, Optional[T]]:
+        # best first search
+        assert pq.is_empty()
+
+        pq.push((init_score, (None, s)))
+        visited = set()
+        parent = {}
+        while not pq.is_empty():
+            current_score, (prev, v) = pq.pop()
+            if v not in visited:
+                visit(v, current_score)
+                visited.add(v)
+                parent[v] = prev
+                for w, weight in self[v].items():
+                    new_score = score(v, w, weight)
+                    pq.push((new_score, (v, w)))
+        return parent

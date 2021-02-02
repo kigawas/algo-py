@@ -1,4 +1,6 @@
-from algo.algorithms.graph.search import bfs, dfs, shortest_paths
+from algo.algorithms.graph.search import bfs
+from algo.algorithms.graph.search import dfs
+from algo.algorithms.graph.search import shortest_paths
 from algo.data_structures.graph import Graph
 
 graph = Graph.from_dict(
@@ -24,15 +26,27 @@ def test_bfs():
 def test_best_search():
     graph = Graph.from_dict(
         {
-            1: {2: 3, 3: 5},
+            1: {2: 5, 3: 3},
             2: {3: 1, 4: 3},
             3: {4: 1},
         }
     )
     dist = {}
-    shortest_paths(
-        graph,
-        1,
-        lambda n, d: dist.update({n: d}),
-    )
-    assert dist[4] == 5
+    res = []
+
+    def visit(n, d):
+        res.append(n)
+        dist[n] = d
+
+    par = shortest_paths(graph, 1, visit)
+    assert dist[4] == 4
+    assert res == [1, 3, 4, 2]
+
+    path = []
+
+    v = 4
+    while v is not None:
+        path.append(v)
+        v = par[v]
+
+    assert path[::-1] == [1, 3, 4]

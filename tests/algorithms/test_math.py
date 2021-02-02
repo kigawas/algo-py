@@ -1,10 +1,8 @@
-from algo.algorithms.math.prime import (
-    fermat_check,
-    linear,
-    miller_rabin_check,
-    sqrt_check,
-    trial_division,
-)
+from algo.algorithms.math.prime import fermat_check
+from algo.algorithms.math.prime import linear
+from algo.algorithms.math.prime import miller_rabin_check
+from algo.algorithms.math.prime import sqrt_check
+from algo.algorithms.math.prime import trial_division
 
 
 def test_prime():

@@ -1,41 +1,22 @@
-from collections import deque
-from heapq import heappop, heappush
-from typing import Any, Callable, Deque, List, Optional, Tuple
+from typing import Any
+from typing import Callable
+from typing import Optional
+from typing import Tuple
 
+from algo.data_structures.bag import PriorityQueue
+from algo.data_structures.bag import Queue
+from algo.data_structures.bag import Stack
 from algo.data_structures.graph import Graph
 
 Vertex = Tuple[Optional[Any], Any]
 
 
 def dfs(graph: Graph, s: int, visit: Callable = lambda n: print(n)):
-    visited = set()
-    bag: List[Vertex] = [(None, s)]
-    parent = {}
-    while bag:
-        p, v = bag.pop()
-        if v not in visited:
-            visit(v)
-            visited.add(v)
-            parent[v] = p
-            for w in graph[v]:
-                bag.append((v, w))
-
-    return parent
+    return graph.wfs(s, Stack(), visit)
 
 
 def bfs(graph: Graph, s: int, visit: Callable = lambda n: print(n)):
-    visited = set()
-    bag: Deque[Vertex] = deque([(None, s)])
-    parent = {}
-    while bag:
-        p, v = bag.popleft()
-        if v not in visited:
-            visit(v)
-            visited.add(v)
-            parent[v] = p
-            for w in graph[v]:
-                bag.append((v, w))
-    return parent
+    return graph.wfs(s, Queue(), visit)
 
 
 def shortest_paths(
@@ -43,15 +24,11 @@ def shortest_paths(
     s: int,
     visit: Callable = lambda n, d: print(n, d),
 ):
-    visited = set()
     dist = {s: 0}
-    bag = [(0, s)]
-    while bag:
-        v_dist, v = heappop(bag)
-        if v not in visited:
-            visit(v, v_dist)
-            visited.add(v)
-            for (w, weight) in graph[v].items():
-                if w not in dist or dist[w] > dist[v] + weight:
-                    dist[w] = dist[v] + weight
-                heappush(bag, (dist[w], w))
+
+    def score(v, w, weight):
+        if w not in dist or dist[w] > dist[v] + weight:
+            dist[w] = dist[v] + weight
+        return dist[w]
+
+    return graph.pqs(s, PriorityQueue(), 0, score, visit)

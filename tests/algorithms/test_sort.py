@@ -1,7 +1,10 @@
 from random import shuffle
 
-from algo.algorithms.array.select import partition, select_kth_smallest
-from algo.algorithms.array.sort import merge, merge_sort, quick_sort
+from algo.algorithms.array.select import partition
+from algo.algorithms.array.select import select_kth_smallest
+from algo.algorithms.array.sort import merge
+from algo.algorithms.array.sort import merge_sort
+from algo.algorithms.array.sort import quick_sort
 
 
 def test_qs():

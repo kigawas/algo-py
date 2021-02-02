@@ -1,4 +1,5 @@
-from typing import Callable, List
+from typing import Callable
+from typing import List
 
 
 def monotonic(

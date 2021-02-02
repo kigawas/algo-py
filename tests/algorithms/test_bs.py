@@ -1,6 +1,8 @@
 import bisect
 
-from algo.algorithms.array.binary_search import binary_search, lower_bound, upper_bound
+from algo.algorithms.array.binary_search import binary_search
+from algo.algorithms.array.binary_search import lower_bound
+from algo.algorithms.array.binary_search import upper_bound
 
 
 def test_bs():

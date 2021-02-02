@@ -1,8 +1,15 @@
 import math
 import random
 
-from algo.data_structures.bst import find, findmax, findmin, height
-from algo.data_structures.treap import Node, delete, insert, merge, split
+from algo.data_structures.bst import find
+from algo.data_structures.bst import findmax
+from algo.data_structures.bst import findmin
+from algo.data_structures.bst import height
+from algo.data_structures.treap import delete
+from algo.data_structures.treap import insert
+from algo.data_structures.treap import merge
+from algo.data_structures.treap import Node
+from algo.data_structures.treap import split
 
 
 def test_split_merge():
