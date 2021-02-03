@@ -1,16 +1,9 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import Any
-from typing import Callable
-from typing import Dict
-from typing import Iterator
-from typing import Optional
-from typing import Tuple
-from typing import TypeVar
+from typing import Any, Callable, Dict, Iterator, Optional, Tuple, TypeVar
 
-from .bag import Bag
-from .bag import PriorityQueue
+from .bag import Bag, PriorityQueue
 
 T = TypeVar("T", str, int)
 ScoreT = TypeVar("ScoreT", int, float)

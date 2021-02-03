@@ -1,6 +1,4 @@
-from algo.algorithms.graph.search import bfs
-from algo.algorithms.graph.search import dfs
-from algo.algorithms.graph.search import shortest_paths
+from algo.algorithms.graph.search import bfs, dfs, shortest_paths
 from algo.data_structures.graph import Graph
 
 graph = Graph.from_dict(

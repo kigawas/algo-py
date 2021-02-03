@@ -1,18 +1,8 @@
-from abc import ABC
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 from collections import deque
-from dataclasses import dataclass
-from dataclasses import field
-from heapq import heapify
-from heapq import heappop
-from heapq import heappush
-from typing import Collection
-from typing import Deque
-from typing import Generic
-from typing import List
-from typing import Optional
-from typing import Tuple
-from typing import TypeVar
+from dataclasses import dataclass, field
+from heapq import heapify, heappop, heappush
+from typing import Collection, Deque, Generic, List, Optional, Tuple, TypeVar
 
 T = TypeVar("T")
 

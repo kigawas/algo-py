@@ -1,6 +1,4 @@
-from algo.data_structures.bag import PriorityQueue
-from algo.data_structures.bag import Queue
-from algo.data_structures.bag import Stack
+from algo.data_structures.bag import PriorityQueue, Queue, Stack
 
 
 def test_bag():

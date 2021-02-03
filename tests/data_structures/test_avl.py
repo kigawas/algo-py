@@ -1,9 +1,7 @@
-from .test_bst import get_balance_tree
-from .test_bst import get_imbalanced_tree
-from .test_bst import print_tree
 from algo.data_structures.avl import rebalance
-from algo.data_structures.bst import is_balanced
-from algo.data_structures.bst import is_bst
+from algo.data_structures.bst import is_balanced, is_bst
+
+from .test_bst import get_balance_tree, get_imbalanced_tree, print_tree
 
 
 def test_balance():
