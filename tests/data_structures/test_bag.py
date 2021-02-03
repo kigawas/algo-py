@@ -16,7 +16,12 @@ def test_bag():
 
     pq = PriorityQueue()
 
-    pq.push((3, "b"))
-    pq.push((1, "a"))
-    pq.push((2, "c"))
-    assert pq.pop() == (1, "a")
+    pq.push("b", 3)
+    pq.push("a", 1)
+    pq.push("c", 2)
+
+    pq.decrease_key("b", 0)
+    assert pq.pop() == ("b", 0)
+
+    pq.decrease_key("a", 0)
+    assert pq.pop() == ("a", 0)

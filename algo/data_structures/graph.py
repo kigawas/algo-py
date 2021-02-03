@@ -88,16 +88,16 @@ class Graph(Mapping[T, Dict[T, int]]):
         # best first search
         assert pq.is_empty()
 
-        pq.push((init_score, (None, s)))
+        pq.push((None, s), init_score)
         visited = set()
         parent = {}
         while not pq.is_empty():
-            current_score, (prev, v) = pq.pop()
+            (prev, v), current_score = pq.pop()
             if v not in visited:
                 visit(v, current_score)
                 visited.add(v)
                 parent[v] = prev
                 for w, weight in self[v].items():
                     new_score = score(v, w, weight)
-                    pq.push((new_score, (v, w)))
+                    pq.push((v, w), new_score)
         return parent

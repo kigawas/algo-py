@@ -3,12 +3,15 @@ from abc import abstractmethod
 from collections import deque
 from dataclasses import dataclass
 from dataclasses import field
+from heapq import heapify
 from heapq import heappop
 from heapq import heappush
 from typing import Collection
 from typing import Deque
 from typing import Generic
 from typing import List
+from typing import Optional
+from typing import Tuple
 from typing import TypeVar
 
 T = TypeVar("T")
@@ -52,12 +55,33 @@ class Queue(Bag):
         return self._bag.popleft()
 
 
-class PriorityQueue(Bag, Generic[T]):  # min heap
-    _bag: List[T] = []
+class PriorityQueue(Bag, Generic[T]):  # min binary heap
+    _bag: List[Tuple[int, T]] = []
 
-    def push(self, v):
-        heappush(self._bag, v)
+    def push(self, item, priority=0):
+        heappush(self._bag, (priority, item))
         return self
 
     def pop(self):
-        return heappop(self._bag)
+        p, item = heappop(self._bag)
+        return item, p
+
+    def decrease_key(self, item, priority):
+        index = self._find(item)
+        if index is None:
+            raise ValueError("item not found")
+
+        self._bag[index] = (priority, item)
+        heapify(self._bag)
+
+    def _find(self, item) -> Optional[int]:
+        i = 0
+
+        while i < len(self._bag):
+            if self._bag[i][1] == item:
+                return i
+            elif self._bag[i + 1][1] == item:
+                return i + 1
+            i = i * 2 + 1
+
+        return None
