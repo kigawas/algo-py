@@ -1,9 +1,33 @@
 # single source shortest paths
 
-from typing import Callable
+from typing import Callable, Dict
 
 from algo.data_structures.bag import PriorityQueue
-from algo.data_structures.graph import Graph
+from algo.data_structures.graph import Graph, T
+
+
+def relax(dist: Dict[T, int], u: T, v: T, weight: int):
+    if v not in dist or dist[v] > dist[u] + weight:
+        dist[v] = dist[u] + weight
+        return True
+    return False
+
+
+def ford(graph: Graph, s: int):
+    dist = {s: 0}
+    parent = {s: None}
+
+    V = len(list(graph.vertices()))
+    for _ in range(V - 1):
+        for u, v, weight in graph.edges():
+            if relax(dist, u, v, weight):
+                parent[v] = u
+
+    for u, v, weight in graph.edges():
+        if dist[v] > dist[u] + weight:
+            # negative cycle!
+            raise ValueError("negative cycle")
+    return dist, parent
 
 
 def dijkstra(
@@ -13,9 +37,9 @@ def dijkstra(
 ):
     dist = {s: 0}
 
-    def score(v, w, weight):
-        if w not in dist or dist[w] > dist[v] + weight:
-            dist[w] = dist[v] + weight
-        return dist[w]
+    def score(u, v, weight):
+        relax(dist, u, v, weight)
+        return dist[v]
 
-    return graph.pqs(s, PriorityQueue(), 0, score, visit)
+    parent = graph.pqs(s, PriorityQueue(), 0, score, visit)
+    return dist, parent

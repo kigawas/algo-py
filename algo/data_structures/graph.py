@@ -36,6 +36,25 @@ class Graph(Mapping[T, Dict[T, int]]):
                 g.add_edge(u, v, weight, undirected=False)
         return g
 
+    def vertices(self):
+        sources = self.keys()
+
+        seen = set()
+        for u in sources:
+            yield u
+            seen.add(u)
+
+        for adj in self.values():
+            for v in adj:
+                if v not in seen:
+                    seen.add(v)
+                    yield v
+
+    def edges(self):
+        for u, adj in self.items():
+            for v, weight in adj.items():
+                yield (u, v, weight)
+
     def add_edge(self, u: T, v: T, weight: int, undirected: bool = True):
         if u not in self._g:
             self._g[u] = {}
@@ -87,9 +106,9 @@ class Graph(Mapping[T, Dict[T, int]]):
         while not pq.is_empty():
             (prev, v), current_score = pq.pop()
             if v not in visited:
-                visit(v, current_score)
                 visited.add(v)
                 parent[v] = prev
+                visit(v, current_score)
                 for w, weight in self[v].items():
                     new_score = score(v, w, weight)
                     pq.push((v, w), new_score)
