@@ -33,7 +33,7 @@ class Graph(Mapping[T, Dict[T, int]]):
         g = cls()
         for u, adj in d.items():
             for v, weight in adj.items():
-                g.add_edge(u, v, weight, False)
+                g.add_edge(u, v, weight)
         return g
 
     def vertices(self):
@@ -45,7 +45,7 @@ class Graph(Mapping[T, Dict[T, int]]):
             for v, weight in adj.items():
                 yield (u, v, weight)
 
-    def add_edge(self, u: T, v: T, weight: int, undirected: bool = True):
+    def add_edge(self, u: T, v: T, weight: int):
         if u not in self._g:
             self._g[u] = {}
 
@@ -53,10 +53,9 @@ class Graph(Mapping[T, Dict[T, int]]):
         self._vertices.add(u)
         self._vertices.add(v)
 
-        if undirected:
-            if v not in self._g:
-                self._g[v] = {}
-            self._g[v][u] = weight
+    def add_undirected_edge(self, u: T, v: T, weight: int):
+        self.add_edge(u, v, weight)
+        self.add_edge(v, u, weight)
 
     def wfs(
         self,

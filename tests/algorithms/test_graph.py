@@ -80,3 +80,15 @@ def test_flow():
 
     graph = ResidualGraph.from_dict(g)
     assert dinitz(graph, 1, 6) == 15
+
+    # UIUC algorithms: P338
+    g = {
+        1: {2: 9, 3: 6},
+        2: {3: 5, 4: 4},
+        3: {4: 14},
+        4: {3: 3, 6: 4},
+        5: {4: 3, 6: 11},
+        6: {1: 15},
+    }
+    graph = ResidualGraph.from_dict(g)
+    assert dinitz(graph, 1, 6) == 4

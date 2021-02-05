@@ -6,9 +6,9 @@ INT_MAX = 1 << 30
 
 
 class ResidualGraph(Graph[T]):
-    def add_edge(self, u: T, v: T, cap: int, undirected: bool):  # type: ignore
-        super().add_edge(u, v, cap, False)
-        super().add_edge(v, u, 0, False)
+    def add_edge(self, u: T, v: T, cap: int):
+        super().add_edge(u, v, cap)
+        super().add_edge(v, u, 0)
 
     def add_flow(self, u: T, v: T, flow: int):
         self[u][v] -= flow
