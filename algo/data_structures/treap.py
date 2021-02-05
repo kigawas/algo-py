@@ -1,11 +1,10 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Optional
-from typing import Tuple
+from typing import Optional, Tuple
 
-from .bst import find
 from .bst import Node as _Node
+from .bst import find
 
 
 @dataclass
@@ -19,19 +18,22 @@ def split(root: Optional[Node], value: int) -> Tuple[Optional[Node], Optional[No
     r"""
     Given:
     ```
-         R                A                B
-       /   \            /   \            /   \
-      /     \          /     \          /     \
-     A       B       LA       RA      LB       RB
+                     R
+                ___/   \___
+               /           \
+           split(A)        split(B)
+            /   \         /   \
+           /     \       /     \
+         LA       RA   LB       RB
     ```
-    If value < R.value, to keep the B subtree, set R.left = RA, return (LA, R):
+    If value < R.value, to cut A and R, set `R.left = RA`, return `(LA, R)`:
     ```
          R                             LA                R
        /   \            ->           /    \            /   \
       /     \                       /      \          /     \
      A       B                    ??        ??      RA       B
     ```
-    Else, to keep the A subtree, set R.right = LB, return (R, RB):
+    Else, to cut R and B, set `R.right = LB`, return `(R, RB)`:
     ```
          R                             R                RB
        /   \            ->           /   \            /    \
@@ -61,7 +63,7 @@ def merge(root_l: Optional[Node], root_r: Optional[Node]) -> Optional[Node]:
        /     \          /     \
      LA       RA      LB       RB
     ```
-    If A.priority > B.priority, set A.right = merge(RA, B), return A;
+    If A.priority < B.priority, set `A.right = merge(RA, B)`, return A;
     ```
           A
         /   \
@@ -72,7 +74,7 @@ def merge(root_l: Optional[Node], root_r: Optional[Node]) -> Optional[Node]:
                                        LB       RB
 
     ```
-    Else, set B.left = merge(A, LB), return B.
+    Else, set `B.left = merge(A, LB)`, return B.
     ```
                                      B
                                    /   \
@@ -92,7 +94,7 @@ def merge(root_l: Optional[Node], root_r: Optional[Node]) -> Optional[Node]:
     if root_l.value > root_r.value:
         raise ValueError
 
-    if root_l.priority > root_r.priority:  # < is also okay
+    if root_l.priority < root_r.priority:  # in practice, > is also okay
         root_l.right = merge(root_l.right, root_r)
         return root_l
     else:
@@ -102,6 +104,8 @@ def merge(root_l: Optional[Node], root_r: Optional[Node]) -> Optional[Node]:
 
 def insert(root: Optional[Node], value: int, priority: int = 0) -> Optional[Node]:
     r"""
+    Intuition: A randomized treap is a quick sort recursion tree per se.
+
     Split root to `A` and `B`, which means `value`s in `A` <= `value` and `values` in `B` > `value`
     ```
           A                B

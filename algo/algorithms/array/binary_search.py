@@ -1,5 +1,4 @@
-from typing import Callable
-from typing import List
+from typing import Callable, List
 
 
 def general_lower_bound(

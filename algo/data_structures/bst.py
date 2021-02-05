@@ -2,8 +2,7 @@ from __future__ import annotations
 
 from abc import ABC
 from dataclasses import dataclass
-from typing import Callable
-from typing import Optional
+from typing import Callable, Optional
 
 
 class AbstractNode(ABC):
@@ -112,6 +111,8 @@ def is_bst(root: Optional[AbstractNode]) -> bool:
         return root.right.value > root.value and is_bst(root.right)
     elif root.right is None and root.left is not None:
         return root.left.value < root.value and is_bst(root.left)
+
+    assert root.left is not None and root.right is not None
 
     is_valid = root.left.value < root.value < root.right.value
     return is_valid and is_bst(root.left) and is_bst(root.right)

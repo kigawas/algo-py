@@ -1,5 +1,4 @@
-from algo.applications import sum_of_subarray_minimums
-from algo.applications import super_egg_drop
+from algo.applications import sum_of_subarray_minimums, super_egg_drop
 
 
 def test_super_egg_drop():

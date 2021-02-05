@@ -1,11 +1,13 @@
-from algo.algorithms.graph.search import bfs
-from algo.algorithms.graph.search import dfs
-from algo.algorithms.graph.search import shortest_paths
+from algo.algorithms.graph.search import bfs, dfs
+from algo.algorithms.graph.sssp import dijkstra, ford
+from algo.data_structures.graph import Graph
 
-graph = {
-    1: [2, 3],
-    2: [3, 4],
-}
+graph = Graph.from_dict(
+    {
+        1: {2: 1, 3: 1},
+        2: {3: 1, 4: 1},
+    }
+)
 
 
 def test_dfs():
@@ -20,16 +22,31 @@ def test_bfs():
     assert res == [1, 2, 3, 4]
 
 
-def test_best_search():
-    graph = {
-        1: [(2, 3), (3, 5)],
-        2: [(3, 1), (4, 3)],
-        3: [(4, 1)],
-    }
-    dist = {}
-    shortest_paths(
-        graph,
-        1,
-        lambda n, d: dist.update({n: d}),
+def test_sssp():
+    graph = Graph.from_dict(
+        {
+            1: {2: 5, 3: 3},
+            2: {3: 1, 4: 3},
+            3: {4: 1},
+        }
     )
-    assert dist[4] == 5
+
+    order = []
+
+    def visit(n, d):
+        order.append(n)
+
+    dist, par = dijkstra(graph, 1, visit)
+    assert dist[4] == 4
+    assert order == [1, 3, 4, 2]
+
+    assert (dist, par) == ford(graph, 1)
+
+    path = []
+
+    v = 4
+    while v is not None:
+        path.append(v)
+        v = par[v]
+
+    assert path[::-1] == [1, 3, 4]
