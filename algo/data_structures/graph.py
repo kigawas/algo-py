@@ -1,13 +1,12 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import Any, Callable, Dict, Iterator, Optional, Tuple, TypeVar
+from typing import Callable, Dict, Iterator, Optional, TypeVar
 
-from .bag import Bag, PriorityQueue
+from .bag import Bag
 
 T = TypeVar("T", str, int)
 ScoreT = TypeVar("ScoreT", int, float)
-G = Dict[Any, Dict[Any, int]]
 
 
 class Graph(Mapping[T, Dict[T, int]]):
@@ -29,7 +28,7 @@ class Graph(Mapping[T, Dict[T, int]]):
             yield u
 
     @classmethod
-    def from_dict(cls, d: G) -> Graph:
+    def from_dict(cls, d: Dict[T, Dict[T, int]]) -> Graph:
         g = cls()
         for u, adj in d.items():
             for v, weight in adj.items():
@@ -87,29 +86,4 @@ class Graph(Mapping[T, Dict[T, int]]):
                 for w in self[v]:
                     bag.push((v, w))
 
-        return parent
-
-    def pqs(
-        self,
-        s: T,
-        pq: PriorityQueue[Tuple[ScoreT, Tuple[Optional[T], T]]],
-        init_score: ScoreT,
-        score: Callable[[T, T, ScoreT], ScoreT],
-        visit: Callable[[T, ScoreT], None] = lambda x, y: None,
-    ) -> Dict[T, Optional[T]]:
-        # best first search
-        assert pq.is_empty()
-
-        pq.push((None, s), init_score)
-        visited = set()
-        parent = {}
-        while not pq.is_empty():
-            (prev, v), current_score = pq.pop()
-            if v not in visited:
-                visited.add(v)
-                parent[v] = prev
-                visit(v, current_score)
-                for w, weight in self[v].items():
-                    new_score = score(v, w, weight)
-                    pq.push((v, w), new_score)
         return parent
