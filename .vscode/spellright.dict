@@ -8,3 +8,5 @@ len
 sqrt
 fermat
 sprp
+dfs
+noqa

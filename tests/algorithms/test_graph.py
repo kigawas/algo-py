@@ -1,3 +1,4 @@
+from algo.algorithms.graph.flow import ResidualGraph, dinitz, fold_fulkerson
 from algo.algorithms.graph.search import bfs, dfs
 from algo.algorithms.graph.sssp import dijkstra, ford
 from algo.data_structures.graph import Graph
@@ -63,3 +64,19 @@ def test_sssp():
         v = par[v]
 
     assert path[::-1] == [1, 2, 3, 4, 5]
+
+
+def test_flow():
+    # UIUC algorithms: P330
+    g = {
+        1: {2: 20, 3: 10},
+        2: {3: 10, 4: 5},
+        3: {5: 10},
+        4: {3: 15, 6: 15},
+        5: {4: 10, 6: 20},
+    }
+    graph = ResidualGraph.from_dict(g)
+    assert fold_fulkerson(graph, 1, 6) == 15
+
+    graph = ResidualGraph.from_dict(g)
+    assert dinitz(graph, 1, 6) == 15

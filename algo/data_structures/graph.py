@@ -1,17 +1,18 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import Callable, Dict, Iterator, Optional, TypeVar
+from typing import Callable, Dict, Iterator, Optional, Set, TypeVar
 
 from .bag import Bag
 
-T = TypeVar("T", str, int)
+T = TypeVar("T")
 ScoreT = TypeVar("ScoreT", int, float)
 
 
 class Graph(Mapping[T, Dict[T, int]]):
     def __init__(self) -> None:
         self._g: Dict[T, Dict[T, int]] = {}
+        self._vertices: Set[T] = set()
 
     @property
     def g(self):
@@ -32,22 +33,12 @@ class Graph(Mapping[T, Dict[T, int]]):
         g = cls()
         for u, adj in d.items():
             for v, weight in adj.items():
-                g.add_edge(u, v, weight, undirected=False)
+                g.add_edge(u, v, weight, False)
         return g
 
     def vertices(self):
-        sources = self.keys()
-
-        seen = set()
-        for u in sources:
-            yield u
-            seen.add(u)
-
-        for adj in self.values():
-            for v in adj:
-                if v not in seen:
-                    seen.add(v)
-                    yield v
+        for v in self._vertices:
+            yield v
 
     def edges(self):
         for u, adj in self.items():
@@ -57,7 +48,10 @@ class Graph(Mapping[T, Dict[T, int]]):
     def add_edge(self, u: T, v: T, weight: int, undirected: bool = True):
         if u not in self._g:
             self._g[u] = {}
+
         self._g[u][v] = weight
+        self._vertices.add(u)
+        self._vertices.add(v)
 
         if undirected:
             if v not in self._g:
