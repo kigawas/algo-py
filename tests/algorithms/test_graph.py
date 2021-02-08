@@ -1,4 +1,9 @@
-from algo.algorithms.graph.flow import ResidualGraph, dinitz, fold_fulkerson
+from algo.algorithms.graph.flow import (
+    ResidualGraph,
+    dinitz,
+    edmonds_karp,
+    fold_fulkerson,
+)
 from algo.algorithms.graph.search import bfs, dfs
 from algo.algorithms.graph.sssp import dijkstra, ford
 from algo.data_structures.graph import Graph
@@ -67,6 +72,16 @@ def test_sssp():
 
 
 def test_flow():
+    def assert_eq(g, s, t, max_flow):
+        graph = ResidualGraph.from_dict(g)
+        assert fold_fulkerson(graph, s, t) == max_flow
+
+        graph = ResidualGraph.from_dict(g)
+        assert edmonds_karp(graph, s, t) == max_flow
+
+        graph = ResidualGraph.from_dict(g)
+        assert dinitz(graph, s, t) == max_flow
+
     # UIUC algorithms: P330
     g = {
         1: {2: 20, 3: 10},
@@ -75,11 +90,7 @@ def test_flow():
         4: {3: 15, 6: 15},
         5: {4: 10, 6: 20},
     }
-    graph = ResidualGraph.from_dict(g)
-    assert fold_fulkerson(graph, 1, 6) == 15
-
-    graph = ResidualGraph.from_dict(g)
-    assert dinitz(graph, 1, 6) == 15
+    assert_eq(g, 1, 6, 15)
 
     # UIUC algorithms: P338
     g = {
@@ -90,5 +101,4 @@ def test_flow():
         5: {4: 3, 6: 11},
         6: {1: 15},
     }
-    graph = ResidualGraph.from_dict(g)
-    assert dinitz(graph, 1, 6) == 4
+    assert_eq(g, 1, 6, 4)

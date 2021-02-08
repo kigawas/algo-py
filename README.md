@@ -17,7 +17,7 @@ Implementation of common data structures and algorithms in Python
   - Merge sort
   - Monotonic stack
 - Graph
-  - Flow
+  - Flows
   - Search
 - Math
   - Euclid

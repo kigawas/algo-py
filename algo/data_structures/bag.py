@@ -52,7 +52,7 @@ class PriorityQueue(Bag, Generic[T]):  # min binary heap
         heappush(self._bag, (priority, item))
         return self
 
-    def pop(self):
+    def pop(self) -> Tuple[T, int]:
         p, item = heappop(self._bag)
         return item, p
 
