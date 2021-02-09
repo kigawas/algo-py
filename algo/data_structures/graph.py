@@ -1,18 +1,18 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import Any, Callable, Dict, Iterator, Optional, Tuple, TypeVar
+from typing import Callable, Dict, Iterator, Optional, Set, TypeVar
 
-from .bag import Bag, PriorityQueue
+from .bag import Bag
 
-T = TypeVar("T", str, int)
+T = TypeVar("T")
 ScoreT = TypeVar("ScoreT", int, float)
-G = Dict[Any, Dict[Any, int]]
 
 
 class Graph(Mapping[T, Dict[T, int]]):
     def __init__(self) -> None:
         self._g: Dict[T, Dict[T, int]] = {}
+        self._vertices: Set[T] = set()
 
     @property
     def g(self):
@@ -29,41 +29,33 @@ class Graph(Mapping[T, Dict[T, int]]):
             yield u
 
     @classmethod
-    def from_dict(cls, d: G) -> Graph:
+    def from_dict(cls, d: Dict[T, Dict[T, int]]) -> Graph:
         g = cls()
         for u, adj in d.items():
             for v, weight in adj.items():
-                g.add_edge(u, v, weight, undirected=False)
+                g.add_edge(u, v, weight)
         return g
 
     def vertices(self):
-        sources = self.keys()
-
-        seen = set()
-        for u in sources:
-            yield u
-            seen.add(u)
-
-        for adj in self.values():
-            for v in adj:
-                if v not in seen:
-                    seen.add(v)
-                    yield v
+        for v in self._vertices:
+            yield v
 
     def edges(self):
         for u, adj in self.items():
             for v, weight in adj.items():
                 yield (u, v, weight)
 
-    def add_edge(self, u: T, v: T, weight: int, undirected: bool = True):
+    def add_edge(self, u: T, v: T, weight: int):
         if u not in self._g:
             self._g[u] = {}
-        self._g[u][v] = weight
 
-        if undirected:
-            if v not in self._g:
-                self._g[v] = {}
-            self._g[v][u] = weight
+        self._g[u][v] = weight
+        self._vertices.add(u)
+        self._vertices.add(v)
+
+    def add_undirected_edge(self, u: T, v: T, weight: int):
+        self.add_edge(u, v, weight)
+        self.add_edge(v, u, weight)
 
     def wfs(
         self,
@@ -87,29 +79,4 @@ class Graph(Mapping[T, Dict[T, int]]):
                 for w in self[v]:
                     bag.push((v, w))
 
-        return parent
-
-    def pqs(
-        self,
-        s: T,
-        pq: PriorityQueue[Tuple[ScoreT, Tuple[Optional[T], T]]],
-        init_score: ScoreT,
-        score: Callable[[T, T, ScoreT], ScoreT],
-        visit: Callable[[T, ScoreT], None] = lambda x, y: None,
-    ) -> Dict[T, Optional[T]]:
-        # best first search
-        assert pq.is_empty()
-
-        pq.push((None, s), init_score)
-        visited = set()
-        parent = {}
-        while not pq.is_empty():
-            (prev, v), current_score = pq.pop()
-            if v not in visited:
-                visited.add(v)
-                parent[v] = prev
-                visit(v, current_score)
-                for w, weight in self[v].items():
-                    new_score = score(v, w, weight)
-                    pq.push((v, w), new_score)
         return parent

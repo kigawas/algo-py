@@ -1,5 +1,4 @@
 # single source shortest paths
-
 from typing import Callable, Dict
 
 from algo.data_structures.bag import PriorityQueue
@@ -35,11 +34,19 @@ def dijkstra(
     s: int,
     visit: Callable = lambda n, d: print(n, d),
 ):
+    # best first search
+    pq = PriorityQueue[int]()
+    pq.push(s, 0)
+
     dist = {s: 0}
+    parent = {s: None}
 
-    def score(u, v, weight):
-        relax(dist, u, v, weight)
-        return dist[v]
+    while not pq.is_empty():
+        v, current_score = pq.pop()
+        visit(v, current_score)
+        for w, weight in graph[v].items():
+            if relax(dist, v, w, weight):
+                parent[w] = v
+                pq.push(w, dist[w])
 
-    parent = graph.pqs(s, PriorityQueue(), 0, score, visit)
     return dist, parent

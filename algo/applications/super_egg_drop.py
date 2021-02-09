@@ -1,35 +1,32 @@
-from algo.algorithms.array.binary_search import general_lower_bound
-
 """
 Leetcode problem: https://leetcode.com/problems/super-egg-drop/
 """
 
 
 def solve_by_dp(K: int, N: int):
+    def solve(k, moves):
+        dp = [None] * (k + 1)
+        for i in range(k + 1):
+            dp[i] = [0] * (moves + 1)
 
-    from functools import lru_cache
+        for i in range(1, k + 1):
+            for j in range(1, moves + 1):
+                dp[i][j] = 1 + dp[i - 1][j - 1] + dp[i][j - 1]
+        # triangular numbers in dp
+        return dp[k][moves]
+        # if k == 1:
+        #     return moves
+        # if moves == 1 or moves == 0:
+        #     return moves
+        # return 1 + solve(k - 1, moves - 1) + solve(k, moves - 1)
 
-    @lru_cache(maxsize=K * N)
-    def dp(K, N):
-        if K == 1:
-            return N
-        if N == 0:
-            return 0
-
-        res = float("INF")
-
-        def closure(mid: int) -> bool:
-            nonlocal res
-            broken = dp(K - 1, mid - 1)
-            not_broken = dp(K, N - mid)
-            cond = broken <= not_broken
-            if cond:
-                res = min(res, not_broken + 1)
-            else:
-                res = min(res, broken + 1)
-            return cond
-
-        general_lower_bound(closure, 1, N + 1)
-        return res
-
-    return dp(K, N)
+    l, r = 1, N + 1
+    while l < r:
+        # logN * K * (N/2 + N/4 + ..) ~= KNlogN
+        mid = (l + r) // 2
+        if solve(K, mid) >= N:
+            # try find less moves
+            r = mid
+        else:
+            l = mid + 1
+    return l
