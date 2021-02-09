@@ -35,6 +35,7 @@ def dijkstra(
     visit: Callable = lambda n, d: print(n, d),
 ):
     # best first search
+    # this is almost SPFA with priority queue
     pq = PriorityQueue[int]()
     pq.push(s, 0)
 
