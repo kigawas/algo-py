@@ -3,7 +3,7 @@ Leetcode problem: https://leetcode.com/problems/super-egg-drop/
 """
 
 
-def solve_by_dp(K: int, N: int):
+def solve_dp(K: int, N: int):
     def solve(k, moves):
         dp = [None] * (k + 1)
         for i in range(k + 1):
@@ -20,13 +20,13 @@ def solve_by_dp(K: int, N: int):
         #     return moves
         # return 1 + solve(k - 1, moves - 1) + solve(k, moves - 1)
 
-    l, r = 1, N + 1
-    while l < r:
+    left, right = 1, N + 1
+    while left < right:
         # logN * K * (N/2 + N/4 + ..) ~= KNlogN
-        mid = (l + r) // 2
+        mid = (left + right) // 2
         if solve(K, mid) >= N:
-            # try find less moves
-            r = mid
+            # try finding less moves
+            right = mid
         else:
-            l = mid + 1
-    return l
+            left = mid + 1
+    return left
