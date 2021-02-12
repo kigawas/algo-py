@@ -1,3 +1,4 @@
+from algo.algorithms.graph.apsp import floyd_warshall
 from algo.algorithms.graph.flow import (
     ResidualGraph,
     dinitz,
@@ -8,43 +9,39 @@ from algo.algorithms.graph.search import bfs, dfs
 from algo.algorithms.graph.sssp import dijkstra, ford
 from algo.data_structures.graph import Graph
 
-graph = Graph.from_dict(
-    {
+
+def test_dfs_bfs():
+    g = {
         1: {2: 1, 3: 1},
         2: {3: 1, 4: 1},
     }
-)
-
-
-def test_dfs():
+    graph = Graph.from_dict(g)
     res = []
     dfs(graph, 1, lambda n: res.append(n))
     assert res == [1, 3, 2, 4]
 
-
-def test_bfs():
+    graph = Graph.from_dict(g)
     res = []
     bfs(graph, 1, lambda n: res.append(n))
     assert res == [1, 2, 3, 4]
 
 
-def test_sssp():
+def test_sssp_apsp():
     # UIUC algorithms: P289
-    graph = Graph.from_dict(
-        {
-            1: {2: 0, 3: -8},
-            2: {3: -16, 4: 0},
-            3: {4: 0, 5: -4},
-            4: {5: -8},
-        }
-    )
+    g = {
+        1: {2: 0, 3: -8},
+        2: {3: -16, 4: 0},
+        3: {4: 0, 5: -4},
+        4: {5: -8},
+    }
+    graph = Graph.from_dict(g)
 
     order = []
 
     def visit(n, d):
         order.append((n, d))
 
-    dist, par = dijkstra(graph, 1, visit)
+    dist, prev = dijkstra(graph, 1, visit)
     assert dist[5] == -24
     assert order == [
         (1, 0),
@@ -59,16 +56,20 @@ def test_sssp():
         (5, -24),
     ]
 
-    assert (dist, par) == ford(graph, 1)
+    assert (dist, prev) == ford(graph, 1)
 
     path = []
 
     v = 5
     while v is not None:
         path.append(v)
-        v = par[v]
+        v = prev[v]
 
     assert path[::-1] == [1, 2, 3, 4, 5]
+
+    graph = Graph.from_dict(g)
+    dist = floyd_warshall(graph)
+    assert dist[1][5] == -24
 
 
 def test_flow():

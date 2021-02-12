@@ -6,12 +6,12 @@ from typing import Callable, Dict, Iterator, Optional, Set, TypeVar
 from .bag import Bag
 
 T = TypeVar("T")
-ScoreT = TypeVar("ScoreT", int, float)
+WeightT = TypeVar("WeightT", int, float)
 
 
-class Graph(Mapping[T, Dict[T, int]]):
+class Graph(Mapping[T, Dict[T, WeightT]]):
     def __init__(self) -> None:
-        self._g: Dict[T, Dict[T, int]] = {}
+        self._g: Dict[T, Dict[T, WeightT]] = {}
         self._vertices: Set[T] = set()
 
     @property
@@ -21,7 +21,7 @@ class Graph(Mapping[T, Dict[T, int]]):
     def __len__(self) -> int:
         return len(self._g)
 
-    def __getitem__(self, u: T) -> Dict[T, int]:
+    def __getitem__(self, u: T) -> Dict[T, WeightT]:
         return self._g.get(u, {})
 
     def __iter__(self) -> Iterator[T]:
@@ -29,7 +29,7 @@ class Graph(Mapping[T, Dict[T, int]]):
             yield u
 
     @classmethod
-    def from_dict(cls, d: Dict[T, Dict[T, int]]) -> Graph:
+    def from_dict(cls, d: Dict[T, Dict[T, WeightT]]) -> Graph:
         g = cls()
         for u, adj in d.items():
             for v, weight in adj.items():
@@ -37,6 +37,8 @@ class Graph(Mapping[T, Dict[T, int]]):
         return g
 
     def vertices(self):
+        # set is stable
+        # i.e. it'll generate the same result every time if no new vertices added
         for v in self._vertices:
             yield v
 
@@ -45,7 +47,7 @@ class Graph(Mapping[T, Dict[T, int]]):
             for v, weight in adj.items():
                 yield (u, v, weight)
 
-    def add_edge(self, u: T, v: T, weight: int):
+    def add_edge(self, u: T, v: T, weight: WeightT):
         if u not in self._g:
             self._g[u] = {}
 
@@ -53,7 +55,7 @@ class Graph(Mapping[T, Dict[T, int]]):
         self._vertices.add(u)
         self._vertices.add(v)
 
-    def add_undirected_edge(self, u: T, v: T, weight: int):
+    def add_undirected_edge(self, u: T, v: T, weight: WeightT):
         self.add_edge(u, v, weight)
         self.add_edge(v, u, weight)
 
