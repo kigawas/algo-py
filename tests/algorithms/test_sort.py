@@ -1,18 +1,15 @@
 from random import shuffle
 
-from algo.algorithms.array.select import partition, select_kth_smallest
-from algo.algorithms.array.sort import merge, merge_sort, quick_sort
+from algo.algorithms.array.select import select_kth_smallest
+from algo.algorithms.array.sort import merge_sort, partition, quick_sort
+
+N = 100
+LIST = list(range(N))
 
 
-def test_qs():
-    a = list(range(0, 1000))
-    shuffle(a)
-    assert quick_sort(a) == sorted(a)
-
-
-def check(array, pivot_index):
+def check_partition(array, pivot_index):
     p = array[pivot_index]
-    r = partition(array, pivot_index)
+    r = partition(array, 0, len(array), pivot_index)
     for i in array[:r]:
         assert i <= p
 
@@ -20,21 +17,23 @@ def check(array, pivot_index):
         assert i >= p
 
 
-def test_ms():
-    merge([1, 3, 4, 5], [0, 2, 6]) == sorted(list(range(0, 7)))
-    a = list(range(0, 1000))
-    shuffle(a)
-    assert merge_sort(a) == sorted(a)
+def check_sort(arr):
+    shuffle(arr)
+    assert quick_sort(arr) == sorted(arr)
 
-    for i in range(10):
-        b = list(range(10))
-        shuffle(b)
-        check(b, i)
+    shuffle(arr)
+    assert merge_sort(arr) == sorted(arr)
+
+
+def test_sort():
+    for i in range(N):
+        shuffle(LIST)
+        check_partition(LIST, i)
+
+    check_sort(LIST)
 
 
 def test_select():
-
-    for i in range(10):
-        b = list(range(10))
-        shuffle(b)
-        assert select_kth_smallest(b, i) == i
+    for i in range(N):
+        shuffle(LIST)
+        assert select_kth_smallest(LIST, i) == i

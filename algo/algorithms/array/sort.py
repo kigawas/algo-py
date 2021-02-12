@@ -2,17 +2,45 @@ from random import randint
 from typing import List
 
 
-def quick_sort(array: List[int]) -> List[int]:
-    if len(array) in (0, 1):
-        return array
+def partition(A: List[int], left: int, right: int, pivot_index: int):
+    A[pivot_index], A[left] = A[left], A[pivot_index]
+    pivot = A[left]
 
-    pivot = array[randint(0, len(array) - 1)]
+    i, j = left + 1, right
+    # use [left, right) to make sure i == j before return
+    while i < j:
+        # invariant:
+        # A[left:i] <= p, A[j-1:right] >= p
+        # A[i] < A[j-1]
+        # A[i:j] ? p
 
-    left = [i for i in array if i < pivot]
-    middle = [i for i in array if i == pivot]
-    right = [i for i in array if i > pivot]
+        if A[i] <= pivot:
+            i += 1
+        if A[j - 1] > pivot:
+            j -= 1
 
-    return quick_sort(left) + middle + quick_sort(right)
+        if i < j and A[i] >= A[j - 1]:
+            A[i], A[j - 1] = A[j - 1], A[i]
+
+    assert i == j
+    A[i - 1], A[left] = A[left], A[i - 1]
+    # A[left: i] <= p, A[i: right] >= p
+    return i - 1
+
+
+def quick_sort(A: List[int]) -> List[int]:
+    n = len(A)
+
+    def qsort(A, i, j):
+        if i >= j:
+            return
+
+        q = partition(A, i, j, randint(i, j - 1))
+        qsort(A, i, q)
+        qsort(A, q + 1, j)
+
+    qsort(A, 0, n)
+    return A
 
 
 def merge(A: List[int], B: List[int]) -> List[int]:
