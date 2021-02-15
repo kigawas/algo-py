@@ -1,4 +1,5 @@
 from algo.applications import (
+    longest_palindrome_substring,
     maximum_subarray,
     palindrome_partitioning,
     sum_of_subarray_minimums,
@@ -32,3 +33,7 @@ def test_palindrome_partitioning():
         assert set(palindrome_partitioning.solve(s)) == set(ans)
 
     check("aah", [("aa", "h"), ("a", "a", "h")])
+
+
+def test_longest_palindrome_substring():
+    assert "ABA" == longest_palindrome_substring.solve("ABABD")
