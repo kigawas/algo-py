@@ -1,4 +1,9 @@
-from algo.applications import maximum_subarray, sum_of_subarray_minimums, super_egg_drop
+from algo.applications import (
+    maximum_subarray,
+    palindrome_partitioning,
+    sum_of_subarray_minimums,
+    super_egg_drop,
+)
 
 
 def test_super_egg_drop():
@@ -20,3 +25,10 @@ def test_maximum_subarray():
     check([8, -19, 5, -4, 20], 21)
     check([-2, 1, -3, 4, -1, 2, 1, -5, 4], 6)
     check([2, -1, 2, 1, 3, -2, 1, 2, 1, -2], 9)
+
+
+def test_palindrome_partitioning():
+    def check(s, ans):
+        assert set(palindrome_partitioning.solve(s)) == set(ans)
+
+    check("aah", [("aa", "h"), ("a", "a", "h")])
