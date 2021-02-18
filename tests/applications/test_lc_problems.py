@@ -103,3 +103,6 @@ def test_word_ladder():
             ["ta", "ts", "is", "if"],
         ],
     )
+    check("hot", "dog", ["hot", "dog"], [])
+    for i, args in enumerate(big_word_ladder()):
+        check(*args)
