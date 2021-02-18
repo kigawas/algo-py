@@ -1,6 +1,4 @@
-from algo.applications import (
-    word_ladder_II,
-)
+from algo.applications import word_ladder_II
 
 from .data import big_word_ladder
 
