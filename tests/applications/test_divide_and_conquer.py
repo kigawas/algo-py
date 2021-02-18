@@ -1,6 +1,4 @@
-from algo.applications import (
-    maximum_subarray
-)
+from algo.applications import maximum_subarray
 
 
 def test_maximum_subarray():
