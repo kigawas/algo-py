@@ -13,15 +13,15 @@ def solve(nums):
             res.append(ans)
             return
         for num in nums:
-            print("num:", num, "@", k)
+            # print("num:", num, "@", k)
             if num in used:
                 continue
             used.add(num)
 
-            print("entering", ans + [num], used, k)
+            # print("entering", ans + [num], used, k)
             bt(ans + [num], k + 1)
             used.remove(num)
-            print("exiting", ans + [num], used, k)
+            # print("exiting", ans + [num], used, k)
 
     bt([], 0)
     return res

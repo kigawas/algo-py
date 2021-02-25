@@ -1,5 +1,7 @@
 from algo.applications import (
+    coin_change,
     palindrome_partitioning,
+    partition_equal_subset_sum,
     partition_to_k_equal_sum_subsets,
     permutations,
     restore_ip_address,
@@ -104,3 +106,15 @@ def test_permutations():
         [3, 1, 2],
         [3, 2, 1],
     ]
+
+
+def test_partition_equal_subset_sum():
+    assert partition_equal_subset_sum.solve_bt([1, 5, 5, 11])
+    assert not partition_equal_subset_sum.solve_bt([2, 2, 4, 10])
+
+
+def test_coin_change():
+    assert coin_change.solve_bt([1, 2, 5], 11) == 3
+    assert coin_change.solve_bt([1], 2) == 2
+    assert coin_change.solve_bt([333, 243, 214, 132, 281], 9334)
+    assert coin_change.solve_bt([2], 3) == -1

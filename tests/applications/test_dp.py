@@ -1,4 +1,11 @@
-from algo.applications import maximum_subarray, super_egg_drop, word_break
+from algo.applications import (
+    coin_change,
+    coin_change_2,
+    maximum_subarray,
+    partition_equal_subset_sum,
+    super_egg_drop,
+    word_break,
+)
 
 
 def test_super_egg_drop():
@@ -37,3 +44,26 @@ def test_word_break():
     )
 
     assert word_break.solve("catsandog", ["cats", "dog", "sand", "and", "cat"]) is False
+
+
+def test_partition_equal_subset_sum():
+    def check(nums, ans):
+        assert partition_equal_subset_sum.solve_dp_naive(nums) is ans
+        assert partition_equal_subset_sum.solve_dp(nums) is ans
+
+    check([1, 5, 5, 11], True)
+    check([2, 2, 4, 10], False)
+    check([2, 13, 1], False)
+
+
+def test_coin_change():
+    def check(coins, amount, ans):
+        assert coin_change.solve_dp_naive(coins, amount) == ans
+        assert coin_change.solve_dp(coins, amount) == ans
+
+    check([1], 1, 1)
+    check([1], 2, 2)
+    check([1, 2, 5], 11, 3)
+    check([2], 3, -1)
+
+    assert coin_change_2.solve([1, 2, 5], 5) == 4
