@@ -136,6 +136,13 @@ def insert(root: Optional[Node], value: int, priority: int = 0) -> Optional[Node
 
 
 def delete(root: Optional[Node], value: int) -> Optional[Node]:
+    r"""
+    Delete = split twice and merge
+
+    1. Split `root` at `value - 1`, get `left` and `right`. Every value in `right` is greater than `value - 1`
+    2. Split `right` at `value`, get `node` and `greater`. Delete `node`
+    3. Merge `left` and `greater`
+    """
     left, right = split(root, value - 1)
     node, greater = split(right, value)
     del node
