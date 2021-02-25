@@ -5,7 +5,6 @@ https://leetcode.com/problems/word-ladder-ii/
 
 def solve(start, end, word_list):
     n = len(word_list)
-    l = len(end)
     res = []
     words = set(word_list)
 
@@ -28,14 +27,11 @@ def solve(start, end, word_list):
                 res.append(path)
                 continue
 
-            for i in range(l):
+            for i in range(len(end)):
                 for c in string.ascii_lowercase:
                     candidate = cur[:i] + c + cur[i + 1 :]
-                    if (
-                        candidate != cur
-                        and candidate in words
-                        and dist[candidate] >= len(path)  # prune
-                    ):
+                    is_valid = candidate != cur and candidate in words
+                    if is_valid and dist[candidate] >= len(path):  # prune
                         dist[candidate] = len(path)
                         q.append((candidate, path + [candidate]))
 

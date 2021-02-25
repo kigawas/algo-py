@@ -1,6 +1,7 @@
 from algo.applications import (
     palindrome_partitioning,
     partition_to_k_equal_sum_subsets,
+    permutations,
     restore_ip_address,
     sudoku_solver,
     word_break_II,
@@ -92,3 +93,14 @@ def test_word_break():
         ],
         [],
     )
+
+
+def test_permutations():
+    assert permutations.solve([1, 2, 3]) == [
+        [1, 2, 3],
+        [1, 3, 2],
+        [2, 1, 3],
+        [2, 3, 1],
+        [3, 1, 2],
+        [3, 2, 1],
+    ]
