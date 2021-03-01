@@ -62,13 +62,12 @@ def solve_dp_naive(coins, amount: int) -> int:
 
 def solve_dp(coins, amount: int) -> int:
     INF = 1 << 31
-    n = len(coins)
 
     dp = [INF] * (amount + 1)
     dp[0] = 0
 
-    for i in range(1, n + 1):
-        for t in range(coins[i - 1], amount + 1):  # not like 0-1 knapsack, no reverse!
-            dp[t] = min(dp[t], dp[t - coins[i - 1]] + 1)
+    for coin in coins:
+        for t in range(coin, amount + 1):  # not like 0-1 knapsack, no reverse!
+            dp[t] = min(dp[t], dp[t - coin] + 1)
 
     return dp[amount] if dp[amount] < INF else -1

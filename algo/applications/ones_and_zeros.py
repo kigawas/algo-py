@@ -5,7 +5,7 @@ https://leetcode.com/problems/ones-and-zeroes/
 
 def solve(strs, m, n):
     """
-    Dual 0-1 knapsack
+    2D 0-1 knapsack
     """
 
     def count(s):

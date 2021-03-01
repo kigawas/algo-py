@@ -1,4 +1,5 @@
 from algo.applications import (
+    bounded_knapsack,
     coin_change,
     coin_change_2,
     maximum_subarray,
@@ -8,6 +9,16 @@ from algo.applications import (
     target_sum,
     word_break,
 )
+
+
+def test_bounded_knapsack():
+    def check(ws, vs, cs, W):
+        ans = bounded_knapsack.solve_naive(ws, vs, cs, W)
+        assert bounded_knapsack.solve_binary(ws, vs, cs, W) == ans
+        assert bounded_knapsack.solve_monotonic(ws, vs, cs, W) == ans
+
+    check([1, 3, 5], [10, 15, 11], [6, 4, 2], 10)
+    check([3, 1, 2, 2], [4, 2, 1, 3], [2, 1, 4, 2], 8)
 
 
 def test_super_egg_drop():
