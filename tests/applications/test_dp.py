@@ -2,8 +2,10 @@ from algo.applications import (
     coin_change,
     coin_change_2,
     maximum_subarray,
+    ones_and_zeros,
     partition_equal_subset_sum,
     super_egg_drop,
+    target_sum,
     word_break,
 )
 
@@ -67,3 +69,15 @@ def test_coin_change():
     check([2], 3, -1)
 
     assert coin_change_2.solve([1, 2, 5], 5) == 4
+
+
+def test_ones_and_zeros():
+    assert ones_and_zeros.solve(["10", "0001", "111001", "1", "0"], 5, 3) == 4
+    assert ones_and_zeros.solve(["10", "0001", "111001", "1", "0"], 4, 3) == 3
+
+
+def test_target_sum():
+    assert target_sum.solve_dp([1, 1, 1, 1, 1], 3) == 5
+    assert target_sum.solve_dp([1], 2) == 0
+    assert target_sum.solve_dp([1, 1], -2) == 1
+    assert target_sum.solve_dp([1, 2, 7, 9, 981], 1000000000) == 0

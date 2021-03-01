@@ -59,14 +59,13 @@ def solve_dp(nums) -> bool:
     if s % 2 != 0:
         return False
 
-    n = len(nums)
     target = s // 2
 
     dp = [False] * (target + 1)
     dp[0] = True
 
-    for i in range(1, n):
-        for t in range(target, nums[i - 1] - 1, -1):  # reverse!
-            dp[t] = dp[t] or dp[t - nums[i - 1]]
+    for num in nums:
+        for t in range(target, num - 1, -1):  # reverse!
+            dp[t] = dp[t] or dp[t - num]
 
     return dp[target]

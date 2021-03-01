@@ -6,6 +6,7 @@ from algo.applications import (
     permutations,
     restore_ip_address,
     sudoku_solver,
+    target_sum,
     word_break_II,
 )
 
@@ -118,3 +119,10 @@ def test_coin_change():
     assert coin_change.solve_bt([1], 2) == 2
     assert coin_change.solve_bt([333, 243, 214, 132, 281], 9334)
     assert coin_change.solve_bt([2], 3) == -1
+
+
+def test_target_sum():
+    assert target_sum.solve_bt([1, 1, 1, 1, 1], 3) == 5
+    assert target_sum.solve_bt([1], 2) == 0
+    assert target_sum.solve_bt([1, 1], -2) == 1
+    assert target_sum.solve_bt([1, 2, 7, 9, 981], 1000000000) == 0
