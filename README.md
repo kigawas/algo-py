@@ -15,10 +15,11 @@ Implementation of common data structures and algorithms in Python
   - Binary search
   - Quick sort
   - Merge sort
-  - Monotonic stack
+  - Monotonic stack/queue
 - Graph
   - Flows
   - Search
 - Math
   - Euclid
   - Prime
+- Dynamic Programming

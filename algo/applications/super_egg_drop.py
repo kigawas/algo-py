@@ -12,7 +12,7 @@ def solve_dp(K: int, N: int):
         for i in range(1, k + 1):
             for j in range(1, moves + 1):
                 dp[i][j] = 1 + dp[i - 1][j - 1] + dp[i][j - 1]
-        # triangular numbers in dp
+        # triangular numbers in DP
         return dp[k][moves]
         # if k == 1:
         #     return moves
@@ -22,7 +22,7 @@ def solve_dp(K: int, N: int):
 
     left, right = 1, N + 1
     while left < right:
-        # logN * K * (N/2 + N/4 + ..) ~= KNlogN
+        # logN * K * (N/2 + N/4 + ..) ~= K * N * logN
         mid = (left + right) // 2
         if solve(K, mid) >= N:
             # try finding less moves
