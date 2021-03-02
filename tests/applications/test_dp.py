@@ -1,4 +1,24 @@
-from algo.applications import maximum_subarray, super_egg_drop, word_break
+from algo.applications import (
+    bounded_knapsack,
+    coin_change,
+    coin_change_2,
+    maximum_subarray,
+    ones_and_zeros,
+    partition_equal_subset_sum,
+    super_egg_drop,
+    target_sum,
+    word_break,
+)
+
+
+def test_bounded_knapsack():
+    def check(ws, vs, cs, W):
+        ans = bounded_knapsack.solve_naive(ws, vs, cs, W)
+        assert bounded_knapsack.solve_binary(ws, vs, cs, W) == ans
+        assert bounded_knapsack.solve_monotonic(ws, vs, cs, W) == ans
+
+    check([1, 3, 5], [10, 15, 11], [6, 4, 2], 10)
+    check([3, 1, 2, 2], [4, 2, 1, 3], [2, 1, 4, 2], 8)
 
 
 def test_super_egg_drop():
@@ -37,3 +57,38 @@ def test_word_break():
     )
 
     assert word_break.solve("catsandog", ["cats", "dog", "sand", "and", "cat"]) is False
+
+
+def test_partition_equal_subset_sum():
+    def check(nums, ans):
+        assert partition_equal_subset_sum.solve_dp_naive(nums) is ans
+        assert partition_equal_subset_sum.solve_dp(nums) is ans
+
+    check([1, 5, 5, 11], True)
+    check([2, 2, 4, 10], False)
+    check([2, 13, 1], False)
+
+
+def test_coin_change():
+    def check(coins, amount, ans):
+        assert coin_change.solve_dp_naive(coins, amount) == ans
+        assert coin_change.solve_dp(coins, amount) == ans
+
+    check([1], 1, 1)
+    check([1], 2, 2)
+    check([1, 2, 5], 11, 3)
+    check([2], 3, -1)
+
+    assert coin_change_2.solve([1, 2, 5], 5) == 4
+
+
+def test_ones_and_zeros():
+    assert ones_and_zeros.solve(["10", "0001", "111001", "1", "0"], 5, 3) == 4
+    assert ones_and_zeros.solve(["10", "0001", "111001", "1", "0"], 4, 3) == 3
+
+
+def test_target_sum():
+    assert target_sum.solve_dp([1, 1, 1, 1, 1], 3) == 5
+    assert target_sum.solve_dp([1], 2) == 0
+    assert target_sum.solve_dp([1, 1], -2) == 1
+    assert target_sum.solve_dp([1, 2, 7, 9, 981], 1000000000) == 0

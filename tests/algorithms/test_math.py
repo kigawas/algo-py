@@ -1,3 +1,4 @@
+from algo.algorithms.math.hash import string_hash
 from algo.algorithms.math.prime import (
     fermat_check,
     linear,
@@ -24,3 +25,7 @@ def test_mr_check():
             assert not miller_rabin_check(i)
         else:
             assert miller_rabin_check(i)
+
+
+def test_string_hash():
+    assert string_hash("abc") == 133
