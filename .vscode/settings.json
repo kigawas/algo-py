@@ -1,20 +1,21 @@
 {
   "cSpell.words": [
-    "sprp",
-    "py",
     "algo",
-    "Leetcode",
-    "Treap",
-    "NONINFRINGEMENT",
     "arr",
-    "len",
-    "sqrt",
-    "fermat",
-    "sprp",
     "dfs",
-    "noqa",
     "dp",
-    "karp"
+    "Fenwick",
+    "fermat",
+    "karp",
+    "Leetcode",
+    "len",
+    "lowbit",
+    "NONINFRINGEMENT",
+    "noqa",
+    "py",
+    "sprp",
+    "sqrt",
+    "Treap"
   ],
   "cSpell.ignorePaths": [
     "LICENSE",
