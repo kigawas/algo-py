@@ -1,8 +1,7 @@
 from random import randint
-from typing import List
 
 
-def partition(A: List[int], left: int, right: int, pivot_index: int):
+def partition(A: list[int], left: int, right: int, pivot_index: int):
     A[pivot_index], A[left] = A[left], A[pivot_index]
     pivot = A[left]
 
@@ -28,7 +27,7 @@ def partition(A: List[int], left: int, right: int, pivot_index: int):
     return i - 1
 
 
-def quick_sort(A: List[int]) -> List[int]:
+def quick_sort(A: list[int]) -> list[int]:
     n = len(A)
 
     def qsort(A, i, j):
@@ -43,7 +42,7 @@ def quick_sort(A: List[int]) -> List[int]:
     return A
 
 
-def merge(A: List[int], B: List[int]) -> List[int]:
+def merge(A: list[int], B: list[int]) -> list[int]:
     i, j = 0, 0
 
     res = []
@@ -65,7 +64,7 @@ def merge(A: List[int], B: List[int]) -> List[int]:
     return res
 
 
-def merge_sort(array: List[int]) -> List[int]:
+def merge_sort(array: list[int]) -> list[int]:
     if len(array) in (0, 1):
         return array
     mid = len(array) // 2

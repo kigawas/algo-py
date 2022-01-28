@@ -1,8 +1,8 @@
 from random import randint
-from typing import List
 
 
-def linear(n: int) -> List[int]:
+def linear(n: int) -> list[int]:
+    # fast but consumes memory
     sieve = [False] * n
     primes = []  # has to be monotonic in order
 
@@ -21,6 +21,7 @@ def linear(n: int) -> List[int]:
 
 
 def trial_division(n: int) -> bool:
+    # naive
     for d in range(2, n // 2):
         if d * d > n:
             # only run d <= sqrt(n)
@@ -44,6 +45,7 @@ def sqrt_check(n: int) -> bool:
 
 def fermat_check(n: int) -> bool:
     # may fail
+    # based on Fermat's little theorem
     if n < 2:
         return False
     elif n == 2:
