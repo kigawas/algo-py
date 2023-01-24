@@ -1,23 +1,23 @@
 repos:
   - repo: https://github.com/pycqa/isort
-    rev: 5.7.0
+    rev: 5.11.4
     hooks:
       - id: isort
 
   - repo: https://github.com/ambv/black
-    rev: 20.8b1
+    rev: 22.12.0
     hooks:
       - id: black
         exclude: venv
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.4.0
+    rev: v4.4.0
     hooks:
       - id: trailing-whitespace
       - id: check-yaml
 
-  - repo: https://gitlab.com/pycqa/flake8
-    rev: 3.8.4
+  - repo: https://github.com/pycqa/flake8
+    rev: 6.0.0
     hooks:
       - id: flake8
         # allow "imported but unused" for pre-commit, forbid it elsewhere e.g. in vscode

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import Callable, Dict, Iterator, Optional, Set, TypeVar
+from typing import Callable, Iterator, Optional, TypeVar
 
 from .bag import Bag
 
@@ -9,10 +9,10 @@ T = TypeVar("T")
 WeightT = TypeVar("WeightT", int, float)
 
 
-class Graph(Mapping[T, Dict[T, WeightT]]):
+class Graph(Mapping[T, dict[T, WeightT]]):
     def __init__(self) -> None:
-        self._g: Dict[T, Dict[T, WeightT]] = {}
-        self._vertices: Set[T] = set()
+        self._g: dict[T, dict[T, WeightT]] = {}
+        self._vertices: set[T] = set()
 
     @property
     def g(self):
@@ -21,7 +21,7 @@ class Graph(Mapping[T, Dict[T, WeightT]]):
     def __len__(self) -> int:
         return len(self._g)
 
-    def __getitem__(self, u: T) -> Dict[T, WeightT]:
+    def __getitem__(self, u: T) -> dict[T, WeightT]:
         return self._g.get(u, {})
 
     def __iter__(self) -> Iterator[T]:
@@ -29,7 +29,7 @@ class Graph(Mapping[T, Dict[T, WeightT]]):
             yield u
 
     @classmethod
-    def from_dict(cls, d: Dict[T, Dict[T, WeightT]]) -> Graph:
+    def from_dict(cls, d: dict[T, dict[T, WeightT]]) -> Graph:
         g = cls()
         for u, adj in d.items():
             for v, weight in adj.items():
@@ -64,7 +64,7 @@ class Graph(Mapping[T, Dict[T, WeightT]]):
         s: T,
         bag: Bag,
         visit: Callable[[T], None] = lambda _: None,
-    ) -> Dict[T, Optional[T]]:
+    ) -> dict[T, Optional[T]]:
         # whatever first search
         assert bag.is_empty()
 

@@ -1,5 +1,3 @@
-from typing import List
-
 from algo.algorithms.array.stack import monotonic
 
 """
@@ -12,11 +10,11 @@ Minimums are 3, 1, 2, 4, 1, 1, 2, 1, 1, 1.  Sum is 17.
 """
 
 
-def solve(A: List[int]) -> int:
+def solve(A: list[int]) -> int:
     arr = [0] + A + [0]
     res = 0
 
-    def should_pop(index: int, mono: List[int]) -> bool:
+    def should_pop(index: int, mono: list[int]) -> bool:
         nonlocal res
         cond = arr[mono[-1]] > arr[index]
         if cond:

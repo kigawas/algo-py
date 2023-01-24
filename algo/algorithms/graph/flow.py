@@ -5,7 +5,7 @@ from algo.data_structures.graph import Graph, T
 INT_MAX = 1 << 30
 
 
-class ResidualGraph(Graph[T]):
+class ResidualGraph(Graph[T, int]):
     def add_edge(self, u: T, v: T, cap: int):
         super().add_edge(u, v, cap)
         super().add_edge(v, u, 0)
@@ -69,17 +69,17 @@ def edmonds_karp(graph: ResidualGraph[T], s: T, t: T) -> int:
     while True:
         prev = bfs()
         if t in prev:
-            df = INT_MAX
-            cur = t
+            df = INT_MAX  # delta flow
+            cur: T = t
             while prev[cur] is not None:
-                cap = graph[prev[cur]][cur]
+                cap = graph[prev[cur]][cur]  # type:ignore
                 df = min(df, cap)
-                cur = prev[cur]
+                cur = prev[cur]  # type:ignore
 
-            cur = t
+            cur: T = t
             while prev[cur] is not None:
-                graph.add_flow(prev[cur], cur, df)
-                cur = prev[cur]
+                graph.add_flow(prev[cur], cur, df)  # type:ignore
+                cur = prev[cur]  # type:ignore
             flow += df
         else:
             break

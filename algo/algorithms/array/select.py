@@ -1,10 +1,9 @@
 from random import randint
-from typing import List
 
 from .sort import partition
 
 
-def select_kth_smallest(array: List[int], k: int) -> int:
+def select_kth_smallest(array: list[int], k: int) -> int:
     assert 0 <= k < len(array)
 
     pivot_index = randint(0, len(array) - 1)

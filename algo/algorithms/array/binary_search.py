@@ -1,11 +1,7 @@
-from typing import Callable, List
+from typing import Callable
 
 
-def general_lower_bound(
-    is_upper_valid: Callable[[int], bool],
-    left: int,
-    right: int,
-):
+def general_lower_bound(is_upper_valid: Callable[[int], bool], left: int, right: int):
     """
     General lower bound framework
     """
@@ -20,7 +16,7 @@ def general_lower_bound(
     return left
 
 
-def lower_bound(array: List[int], target: int, *, left: int = 0, right: int = None):
+def lower_bound(array: list[int], target: int, *, left: int = 0, right: int = None):
     """
     Search i for array[i] >= target and array[j] < target, i in [left, right) and j in [0, left).
     Does not exist if i == right
@@ -32,7 +28,7 @@ def lower_bound(array: List[int], target: int, *, left: int = 0, right: int = No
     return general_lower_bound(lambda mid: array[mid] < target, left, right)
 
 
-def upper_bound(array: List[int], target: int, *, left: int = 0, right: int = None):
+def upper_bound(array: list[int], target: int, *, left: int = 0, right: int = None):
     """
     Search i for array[i] > target and array[j] <= target, i in [left, right) and j in [0, left).
     Does not exist if i == right
@@ -45,7 +41,7 @@ def upper_bound(array: List[int], target: int, *, left: int = 0, right: int = No
     return general_lower_bound(lambda mid: not (target < array[mid]), left, right)
 
 
-def binary_search(array: List[int], target: int, *, left: int = 0, right: int = None):
+def binary_search(array: list[int], target: int, *, left: int = 0, right: int = None):
     """
     Perform binary search in array[i] for i in [left, right).
     Does not exist if i == -1

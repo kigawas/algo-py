@@ -1,11 +1,11 @@
 # single source shortest paths
-from typing import Callable, Dict
+from typing import Callable, Optional
 
 from algo.data_structures.bag import PriorityQueue
 from algo.data_structures.graph import Graph, T
 
 
-def relax(dist: Dict[T, int], u: T, v: T, weight: int):
+def relax(dist: dict[T, int], u: T, v: T, weight: int):
     if v not in dist or dist[v] > dist[u] + weight:
         dist[v] = dist[u] + weight
         return True
@@ -40,7 +40,7 @@ def dijkstra(
     pq.push(s, 0)
 
     dist = {s: 0}
-    parent = {s: None}
+    parent: dict[int, Optional[int]] = {s: None}
 
     while not pq.is_empty():
         v, current_score = pq.pop()

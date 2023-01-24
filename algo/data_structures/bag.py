@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from collections import deque
 from dataclasses import dataclass, field
 from heapq import heapify, heappop, heappush
-from typing import Collection, Deque, Generic, List, Optional, Tuple, TypeVar
+from typing import Collection, Deque, Generic, Optional, Tuple, TypeVar
 
 T = TypeVar("T")
 
@@ -24,7 +24,7 @@ class Bag(ABC):
 
 @dataclass
 class Stack(Bag):
-    _bag: List = field(default_factory=list)
+    _bag: list = field(default_factory=list)
 
     def push(self, v):
         self._bag.append(v)
@@ -46,7 +46,7 @@ class Queue(Bag):
 
 
 class PriorityQueue(Bag, Generic[T]):  # min binary heap
-    _bag: List[Tuple[int, T]] = []
+    _bag: list[Tuple[int, T]] = []
 
     def push(self, item, priority=0):
         heappush(self._bag, (priority, item))

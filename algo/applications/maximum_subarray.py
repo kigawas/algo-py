@@ -4,6 +4,7 @@ https://leetcode.com/problems/maximum-subarray/
 
 
 def solve_dc(nums):
+    # divide and conquer
     n = len(nums)
 
     def dc(i, j):

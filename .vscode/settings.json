@@ -1,6 +1,5 @@
 {
   "spellright.language": ["en"],
   "spellright.documentTypes": ["markdown", "latex", "plaintext", "python"],
-  "python.formatting.provider": "black",
-  "python.pythonPath": "venv/bin/python"
+  "python.formatting.provider": "black"
 }

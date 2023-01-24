@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Optional, Tuple
+from typing import Optional
 
 from .bst import Node as _Node
 from .bst import find
@@ -14,7 +14,7 @@ class Node(_Node):
     priority: int = 0
 
 
-def split(root: Optional[Node], value: int) -> Tuple[Optional[Node], Optional[Node]]:
+def split(root: Optional[Node], value: int) -> tuple[Optional[Node], Optional[Node]]:
     r"""
     Given:
     ```
