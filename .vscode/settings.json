@@ -1,5 +1,23 @@
 {
-  "spellright.language": ["en"],
-  "spellright.documentTypes": ["markdown", "latex", "plaintext", "python"],
-  "python.formatting.provider": "black"
+  "cSpell.words": [
+    "sprp",
+    "py",
+    "algo",
+    "Leetcode",
+    "Treap",
+    "NONINFRINGEMENT",
+    "arr",
+    "len",
+    "sqrt",
+    "fermat",
+    "sprp",
+    "dfs",
+    "noqa",
+    "dp",
+    "karp"
+  ],
+  "cSpell.ignorePaths": [
+    "LICENSE",
+    ".vscode"
+  ]
 }

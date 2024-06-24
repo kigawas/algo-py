@@ -7,19 +7,17 @@ description = "Algorithms in Python"
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.10"
 
-[tool.poetry.dev-dependencies]
-black = "^23.1a1"
-flake8 = "^6.0.0"
-ipython = "^8.0.1"
-mypy = "^0.991"
-pytest = "^7.2.1"
+[tool.poetry.group.dev.dependencies]
+ipython = "^8.22.0"
+mypy = "^1.10"
+ruff = "^0.4.10"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.1.0"
+pytest-cov = "^5.0.0"
 
 [build-system]
 build-backend = "poetry.core.masonry.api"
 requires = ["poetry-core>=1.0.0"]
-
-[tool.isort]
-multi_line_output = 3
-profile = "black"

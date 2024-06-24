@@ -1,3 +1,4 @@
+from algo.algorithms.math.euclid import ext_gcd, gcd
 from algo.algorithms.math.hash import string_hash
 from algo.algorithms.math.prime import (
     fermat_check,
@@ -29,3 +30,9 @@ def test_mr_check():
 
 def test_string_hash():
     assert string_hash("abc") == 133
+
+
+def test_gcd():
+    assert gcd(10, 24) == 2
+    assert gcd(11, 0) == gcd(0, 11) == 11
+    assert ext_gcd(3, 11) == (1, 4, -1)
