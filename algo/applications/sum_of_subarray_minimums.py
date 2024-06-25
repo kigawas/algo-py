@@ -33,4 +33,4 @@ def solve(A: list[int]) -> int:
         return cond
 
     monotonic(len(arr), should_pop)
-    return res % (10 ** 9 + 7)
+    return res % (10**9 + 7)
